@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Xml.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Day_01_G03
+
+namespace C___LINQ_2
 {
 
     class Customer
@@ -17,12 +20,12 @@ namespace Day_01_G03
         public string Country { get; set; }
         public string Phone { get; set; }
         public string Fax { get; set; }
-        public Order[] Orders { get; set; }
+        public Orders[] Order { get; set; }
         public Customer(string customerID, string customerName)
         {
             CustomerID = customerID;
             CustomerName = customerName;
-            Orders = new Order[10];
+            Order = new Orders[10];
         }
 
         public Customer() { }
@@ -30,20 +33,21 @@ namespace Day_01_G03
         public override string ToString()
             => $"{CustomerID}, {CustomerName}, {Address}, {City}, {Region}, {PostalCode}, {Country}, {Phone}, {Fax}";
     }
-    class Order
+    class Orders
     {
 
         public int OrderID { get; set; }
         public DateTime OrderDate { get; set; }
         public decimal Total { get; set; }
 
-        public Order(int orderID, DateTime orderDate, decimal total)
+        public Orders(int orderID, DateTime orderDate, decimal total)
         {
             OrderID = orderID;
             OrderDate = orderDate;
             Total = total;
         }
-        public Order()
+
+        public Orders()
         {
 
         }
@@ -54,7 +58,7 @@ namespace Day_01_G03
     public static class ListGenerator
     {
         public static List<Product> ProductsList { get; private set; }
-
+        public static List<Orders> ListOrders { get; private set; }
         public static List<Customer> CustomersList { get; private set; }
 
         static ListGenerator()
@@ -218,39 +222,42 @@ namespace Day_01_G03
                         UnitPrice = 13.0000M, UnitsInStock = 32 }
             };
 
+ 
             CustomersList = new List<Customer>
             {
                 new Customer("ALFKI", "Alfreds Futterkiste")
                 {
                     Address = "Obere Str. 57",
-                    City = "Berlin",
+                    City = "Washington",
                     Region = null,
                     PostalCode = "12209",
                     Country = "Germany",
                     Phone = "030-0074321",
                     Fax = "030-0076545",
-                    Orders = new Order[]
+                    Order = new Orders[]
                     {
-                        new Order(10643, new DateTime(1997, 8, 25), 814.50M),
-                        new Order(10692, new DateTime(1997, 10, 3), 878.00M)
+                        new Orders(10643, new DateTime(1997, 8, 25), 814.50M),
+                        new Orders(10692, new DateTime(1997, 10, 3), 878.00M),
+                        new Orders(10688, new DateTime(2001, 1, 19), 800.00M),
+                        new Orders(10685, new DateTime(1999, 12, 12), 900.00M)
                     }
                 }
             };
         }
-        public class Order
+        public class Orders
         {
             public int OrderID { get; set; }
             public DateTime OrderDate { get; set; }
             public decimal Total { get; set; }
 
-            public Order(int orderID, DateTime orderDate, decimal total)
+            public Orders(int orderID, DateTime orderDate, decimal total)
             {
                 OrderID = orderID;
                 OrderDate = orderDate;
                 Total = total;
             }
 
-            public Order() { }
+            public Orders() { }
 
             public override string ToString() => $"Order Id: {OrderID}, Date: {OrderDate.ToShortDateString()}, Total: {Total}";
         }
@@ -265,13 +272,13 @@ namespace Day_01_G03
             public string Country { get; set; }
             public string Phone { get; set; }
             public string Fax { get; set; }
-            public Order[] Orders { get; set; }
+            public Orders[] Order { get; set; }
 
             public Customer(string customerID, string customerName)
             {
                 CustomerID = customerID;
                 CustomerName = customerName;
-                Orders = new Order[10];
+                Order = new Orders[10];
             }
 
             public Customer() { }
@@ -295,6 +302,11 @@ namespace Day_01_G03
         internal static IEnumerable<Product> GetProductsList()
         {
             return ProductsList;
+        }
+
+        internal static IEnumerable<Customer> GetCustomersList()
+        {
+            return CustomersList;
         }
 
     }
